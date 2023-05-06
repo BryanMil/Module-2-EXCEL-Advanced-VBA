@@ -1,0 +1,152 @@
+Sub Stock()
+
+' Make Macr run across all worksheets
+
+Dim Ws_Count As Integer
+Dim x As Integer
+
+Ws_Count = ActiveWorkbook.Worksheets.Count
+
+For x = 1 To Ws_Count
+Worksheets(x).Activate
+
+Dim T As String
+Dim N As Integer
+Dim N2 As Integer
+Dim OP As Double
+Dim CL As Double
+
+
+
+N2 = 2
+N = 3
+OP = Cells(2, 3).Value
+
+
+Cells(2, 9).Value = Cells(2, 1).Value
+T = Cells(2, 1).Value
+
+' ticker - Yearly Change - Percent Change
+lastrow = (Cells(Rows.Count, 1).End(xlUp).Row + 1)
+
+ 
+For I = 3 To lastrow
+
+ If (Cells(I, 1).Value <> (T)) Then
+ T = Cells(I, 1).Value
+ Cells(N, 9).Value = Cells(I, 1).Value
+ N = N + 1
+ CL = Cells((I - 1), 6).Value
+ Cells(N2, 10).Value = CL - OP
+ Cells(N2, 11).Value = (CL - OP) / OP
+ 
+ OP = Cells(I, 3).Value
+ N2 = N2 + 1
+
+ End If
+ 
+Next I
+
+' TTl Stock Volume
+
+L = 2
+P = Cells(2, 1).Value
+N3 = Cells(2, 7).Value
+
+For I = 3 To lastrow
+
+ If (Cells(I, 1).Value = (P)) Then
+ N3 = N3 + (Cells(I, 7).Value)
+ 
+ Else
+ Cells(L, 12).Value = N3
+ L = L + 1
+ P = (Cells(I, 1).Value)
+ N3 = (Cells(I, 7).Value)
+ 
+ End If
+Next I
+
+'Shade the percent change
+
+For I = 2 To 3001
+
+If (Cells(I, 10).Value < (0)) Then
+Cells(I, 10).Interior.Color = vbRed
+
+ElseIf (Cells(I, 10).Value > (0)) Then
+   Cells(I, 10).Interior.Color = vbGreen
+   
+
+
+End If
+Next I
+'Find greatest percent increase
+
+R = 0
+H = 0
+
+
+For I = 2 To 3001
+
+If (Cells(I, 11).Value > (H)) Then
+H = Cells(I, 11).Value
+R = Cells(I, 9).Value
+ 
+
+
+End If
+
+Next I
+Cells(2, 17).Value = (H)
+Cells(2, 16).Value = (R)
+
+'Find greatest decrease
+M = 0
+Z = 0
+
+For I = 2 To 3001
+
+If (Cells(I, 11).Value < (M)) Then
+M = Cells(I, 11).Value
+Z = Cells(I, 9).Value
+
+
+End If
+
+Next I
+Cells(3, 17).Value = (M)
+Cells(3, 16).Value = (Z)
+
+
+' Greatest total volume
+Y = 0
+U = 0
+
+For I = 2 To 3001
+
+If (Cells(I, 12).Value > (Y)) Then
+Y = Cells(I, 12).Value
+U = Cells(I, 9).Value
+
+
+End If
+
+Next I
+Cells(4, 17).Value = (Y)
+Cells(4, 16).Value = (U)
+
+Next x
+
+ 
+
+
+
+End Sub
+
+
+
+ 
+
+
+
