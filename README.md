@@ -8,3 +8,5 @@ The ticker, Yearly Change, Percent Change , Total Stock by volume, Greatest perc
 
 Screenshots of 2018, 2019, 2020 befor and after macro is run.
 Notepad "VBA Script" has code for module 2
+
+Code finds 6 stats in 70,000 lines of data on three work sheets.
